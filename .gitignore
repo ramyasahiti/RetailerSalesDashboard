@@ -1,0 +1,35 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# .NET build files
+**/bin/
+**/obj/
+
+# Angular
+**/node_modules/
+**/.angular/cache/
+
+# SQLite databases
+*.db
+*.db-shm
+*.db-wal
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Local configuration
+appsettings.Local.json
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git repositories accidentally copied inside the project
+**/.git/
