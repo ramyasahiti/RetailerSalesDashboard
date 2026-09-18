@@ -260,7 +260,7 @@ cd RetailerSalesDashboard
 Navigate to the API project:
 
 ```bash
-cd RetailerSales.Api
+cd backend
 dotnet restore
 dotnet run
 ```
