@@ -1,0 +1,1176 @@
+<div
+  class="page"
+  [class.dark-theme]="darkMode()">
+
+  <!-- ==========================================
+       HEADER
+  ========================================== -->
+
+  <header class="header">
+
+    <svg
+      class="header-illustration"
+      viewBox="0 0 460 380"
+      aria-hidden="true"
+      focusable="false">
+
+      <circle
+        class="illustration-ring"
+        cx="150"
+        cy="170"
+        r="150">
+      </circle>
+
+      <circle
+        class="illustration-ring"
+        cx="150"
+        cy="170"
+        r="105">
+      </circle>
+
+      <path
+        class="illustration-pin"
+        d="M150 40c-50 0-90 40-90 90 0 67 90 165 90 165s90-98 90-165c0-50-40-90-90-90Z">
+      </path>
+
+      <circle
+        class="illustration-pin-hole"
+        cx="150"
+        cy="130"
+        r="30">
+      </circle>
+
+      <rect
+        class="illustration-bar"
+        x="270"
+        y="230"
+        width="20"
+        height="50"
+        rx="3">
+      </rect>
+
+      <rect
+        class="illustration-bar"
+        x="300"
+        y="200"
+        width="20"
+        height="80"
+        rx="3">
+      </rect>
+
+      <rect
+        class="illustration-bar"
+        x="330"
+        y="165"
+        width="20"
+        height="115"
+        rx="3">
+      </rect>
+
+      <rect
+        class="illustration-bar"
+        x="360"
+        y="120"
+        width="20"
+        height="160"
+        rx="3">
+      </rect>
+
+      <rect
+        class="illustration-bar"
+        x="390"
+        y="80"
+        width="20"
+        height="200"
+        rx="3">
+      </rect>
+
+    </svg>
+
+
+    <div class="header-content">
+
+      <div class="header-text">
+
+        <h1 class="header-title">
+
+          Retailer Sales
+
+          <span class="header-title-accent">
+
+            Summary
+
+            <svg
+              class="title-underline"
+              viewBox="0 0 220 14"
+              preserveAspectRatio="none"
+              aria-hidden="true">
+
+              <path
+                d="M2 10 C 55 2, 165 2, 218 10">
+              </path>
+
+            </svg>
+
+          </span>
+
+        </h1>
+
+
+        <p class="tagline">
+
+          <span
+            class="tagline-quote"
+            aria-hidden="true">
+          </span>
+
+          Know where your brand wins.
+
+        </p>
+
+
+        <p class="header-description">
+
+          Search retailer performance by location and date range.
+
+        </p>
+
+      </div>
+
+
+      <button
+        class="theme-button"
+        type="button"
+        (click)="toggleTheme()"
+        [attr.aria-label]="
+          darkMode()
+            ? 'Switch to light theme'
+            : 'Switch to dark theme'
+        ">
+
+        <span *ngIf="!darkMode()">
+          🌙
+        </span>
+
+        <span *ngIf="darkMode()">
+          ☀️
+        </span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- ==========================================
+       MAIN CONTENT
+  ========================================== -->
+
+  <main class="content">
+
+
+    <!-- ========================================
+         SEARCH CARD
+    ======================================== -->
+
+    <section class="search-card">
+
+      <div class="form-grid">
+
+
+        <!-- LOCATION -->
+
+        <div class="form-group">
+
+          <label
+            for="geography"
+            class="required-label">
+
+            Location
+
+            <span
+              class="required-asterisk"
+              aria-label="required">
+              *
+            </span>
+
+          </label>
+
+
+          <div class="input-with-icon">
+
+            <svg
+              class="input-icon location-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true">
+
+              <path
+                d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z">
+              </path>
+
+              <circle
+                cx="12"
+                cy="10"
+                r="2.5">
+              </circle>
+
+            </svg>
+
+
+            <select
+              id="geography"
+              [(ngModel)]="geography"
+              (change)="onGeographyChange()"
+              [disabled]="loading()">
+
+              <option
+                value=""
+                disabled>
+
+                Select location
+
+              </option>
+
+
+              <option value="Hyderabad">
+                Hyderabad
+              </option>
+
+              <option value="Delhi">
+                Delhi
+              </option>
+
+              <option value="Mumbai">
+                Mumbai
+              </option>
+
+              <option value="Bangalore">
+                Bangalore
+              </option>
+
+              <option value="Chennai">
+                Chennai
+              </option>
+
+              <option value="Pune">
+                Pune
+              </option>
+
+              <option value="Kolkata">
+                Kolkata
+              </option>
+
+              <option value="Ahmedabad">
+                Ahmedabad
+              </option>
+
+
+              <!-- IMPORTANT:
+                   Backend still receives "All Geographies" -->
+
+              <option value="All Geographies">
+                All Locations
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- ======================================
+             START DATE
+        ======================================= -->
+
+        <div class="form-group">
+
+          <label for="dateFrom">
+            Start Date
+          </label>
+
+
+          <input
+            id="dateFrom"
+            type="date"
+            [(ngModel)]="dateFrom"
+            (click)="openDatePicker($event)"
+            [min]="minDate"
+            [max]="maxDate"
+            [disabled]="loading()">
+
+        </div>
+
+
+        <!-- ======================================
+             END DATE
+        ======================================= -->
+
+        <div class="form-group">
+
+          <label for="dateTo">
+            End Date
+          </label>
+
+
+          <input
+            id="dateTo"
+            type="date"
+            [(ngModel)]="dateTo"
+            (click)="openDatePicker($event)"
+            [min]="dateFrom || minDate"
+            [max]="maxDate"
+            [disabled]="loading()">
+
+        </div>
+
+
+        <!-- ======================================
+             SEARCH
+        ======================================= -->
+
+        <div class="search-wrapper">
+
+          <label class="search-label">
+            &nbsp;
+          </label>
+
+
+          <button
+            class="search-button"
+            type="button"
+            (click)="search()"
+            [disabled]="loading()">
+
+            <span *ngIf="!loading()">
+
+              <span class="search-icon">
+                ⌕
+              </span>
+
+              Search
+
+            </span>
+
+
+            <span
+              *ngIf="loading()"
+              class="search-loading">
+
+              <span
+                class="spinner"
+                aria-hidden="true">
+              </span>
+
+              Searching...
+
+            </span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================================
+         ERROR
+    ========================================== -->
+
+    <div
+      class="message error-message"
+      *ngIf="error()">
+
+      <span>
+        {{ error() }}
+      </span>
+
+
+      <button
+        *ngIf="showRetry()"
+        class="retry-button"
+        type="button"
+        (click)="retry()"
+        [disabled]="loading()">
+
+        Retry
+
+      </button>
+
+    </div>
+
+
+    <!-- ========================================
+         SEARCHING
+    ========================================== -->
+
+    <div
+      class="message searching-message"
+      *ngIf="loading()">
+
+      <span>
+        Searching for sales summary...
+      </span>
+
+
+      <span
+        class="default-range-loading"
+        *ngIf="usedDefaultDateRange()">
+
+        Date range not selected |
+        Showing the last 2 months by default.
+
+      </span>
+
+    </div>
+
+
+    <!-- ========================================
+         GENERATED TIME + DOWNLOAD
+    ======================================== -->
+
+    <div
+      class="generated-time"
+      *ngIf="response()">
+
+      <div class="generated-time-text">
+
+        <span class="generated-dot"></span>
+
+        Results generated at
+
+        <strong class="generated-timestamp">
+          {{ currentTime }}
+        </strong>
+
+      </div>
+
+
+      <button
+        class="download-button"
+        type="button"
+        (click)="downloadReport()"
+        aria-label="Download this report as a CSV file">
+
+        <svg
+          class="download-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          aria-hidden="true">
+
+          <path d="M12 3v12"></path>
+
+          <path d="M7.5 10.5 12 15l4.5-4.5"></path>
+
+          <path d="M5 21h14"></path>
+
+        </svg>
+
+        Download Report
+
+      </button>
+
+    </div>
+
+
+    <!-- ========================================
+         RESULTS
+    ========================================== -->
+
+    <section
+      class="results"
+      *ngIf="response() as data">
+
+
+      <!-- ======================================
+           SUMMARY CARDS
+      ======================================= -->
+
+      <div class="summary-grid">
+
+
+        <!-- TOTAL RETAILERS -->
+
+        <div class="summary-card retailers-card">
+
+          <div class="card-icon retailer-icon">
+            ◉
+          </div>
+
+
+          <div class="card-content">
+
+            <span class="summary-label">
+              TOTAL RETAILERS
+            </span>
+
+            <span class="summary-value">
+              {{ data.totalRetailers }}
+            </span>
+
+            <span class="summary-description">
+              Retailers found in selection
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- TOTAL SALES -->
+
+        <div class="summary-card sales-card">
+
+          <div class="card-icon sales-icon">
+            ◈
+          </div>
+
+
+          <div class="card-content">
+
+            <span class="summary-label">
+              TOTAL SALES
+            </span>
+
+            <span class="summary-value">
+              {{ getTotalSales() }}
+            </span>
+
+            <span class="summary-description">
+              Successful sales transactions
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- TOP PERFORMER -->
+
+        <div class="summary-card performer-card">
+
+          <div class="card-icon performer-icon">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              class="trophy-icon"
+              aria-hidden="true">
+
+              <path d="M8 21h8"></path>
+
+              <path d="M12 17v4"></path>
+
+              <path
+                d="M7 4h10v4a5 5 0 0 1-10 0V4Z">
+              </path>
+
+              <path
+                d="M7 5H4.5a1 1 0 0 0-1 1c0 2.5 1.5 4.5 4 4.7">
+              </path>
+
+              <path
+                d="M17 5h2.5a1 1 0 0 1 1 1c0 2.5-1.5 4.5-4 4.7">
+              </path>
+
+            </svg>
+
+          </div>
+
+
+          <div class="card-content">
+
+            <span class="summary-label">
+              TOP PERFORMER
+            </span>
+
+            <span class="summary-value top-performer-name">
+              {{ getTopPerformerNames() }}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- KEY INSIGHT -->
+
+        <div class="summary-card insight-card">
+
+          <div class="card-icon insight-icon">
+            ✦
+          </div>
+
+
+          <div class="card-content">
+
+            <span class="summary-label">
+              KEY INSIGHT
+            </span>
+
+            <span class="summary-value insight-percentage">
+              {{ getTopPerformerPercentage() | number:'1.0-1' }}%
+            </span>
+
+            <span class="summary-insight">
+              {{ getKeyInsight() }}
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ======================================
+           RETAILER SALES HEADER
+      ======================================= -->
+
+      <div class="results-header">
+
+        <div class="results-title">
+
+          <svg
+            class="cart-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            aria-hidden="true">
+
+            <circle
+              cx="9"
+              cy="20"
+              r="1.3">
+            </circle>
+
+            <circle
+              cx="18"
+              cy="20"
+              r="1.3">
+            </circle>
+
+            <path
+              d="M2.5 3h2.2l2.1 10.2a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 1.9-1.4L21 7H6">
+            </path>
+
+          </svg>
+
+
+          <div class="results-heading-content">
+
+            <div class="results-heading-row">
+
+              <h2>
+                Retailer Sales Summary
+              </h2>
+
+
+              <span class="results-date-range">
+
+                <span *ngIf="usedDefaultDateRange()">
+                  Default range: Last 2 months ·
+                </span>
+
+                <span *ngIf="!usedDefaultDateRange()">
+                  Date range:
+                </span>
+
+
+                <strong>
+                  {{ data.dateFrom | date:'dd-MM-yyyy' }}
+                </strong>
+
+
+                <span class="range-separator">
+                  to
+                </span>
+
+
+                <strong>
+                  {{ data.dateTo | date:'dd-MM-yyyy' }}
+                </strong>
+
+              </span>
+
+            </div>
+
+            <div
+              *ngIf="geography === 'All Geographies'"
+              class="results-date-range all-locations-info">
+
+              <strong>All Locations includes:</strong>
+              {{ allLocationCities.join(', ') }}
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- SORT -->
+
+        <div class="sort-container">
+
+          <button
+            class="filter-button"
+            type="button"
+            (click)="toggleSort()"
+            title="Change sort order"
+            [attr.aria-label]="
+              sortOrder() === 'desc'
+                ? 'Sort sales from low to high'
+                : 'Sort sales from high to low'
+            ">
+
+            ☰
+
+          </button>
+
+
+          <span class="sort-label">
+
+            <span *ngIf="sortOrder() === 'desc'">
+              High to Low
+            </span>
+
+            <span *ngIf="sortOrder() === 'asc'">
+              Low to High
+            </span>
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- ======================================
+           RETAILER TABLE
+      ======================================= -->
+
+      <div class="table-container">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Retailer Name
+              </th>
+
+              <th>
+                Location
+              </th>
+
+              <th class="sales-column">
+                Sales Count
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <ng-container
+              *ngFor="let item of sortedRetailers()">
+
+
+              <!-- ==================================
+                   RETAILER ROW
+              =================================== -->
+
+              <tr
+                class="retailer-row"
+                (click)="toggleRetailer(item.retailerId)">
+
+                <td>
+
+                  <span class="retailer-expand-icon">
+
+                    {{
+                      expandedRetailerId() === item.retailerId
+                        ? '▼'
+                        : '▶'
+                    }}
+
+                  </span>
+
+                  {{ item.retailerName }}
+
+                </td>
+
+
+                <td>
+                  {{ data.geography === 'All Geographies' ? 'All Locations' : data.geography }}
+                </td>
+
+
+                <td class="sales-column sales-count">
+                  {{ item.salesCount }}
+                </td>
+
+              </tr>
+
+
+              <!-- ==================================
+                   PRODUCT DETAILS
+              =================================== -->
+
+              <tr
+                *ngIf="
+                  expandedRetailerId() === item.retailerId
+                "
+                class="product-detail-row">
+
+                <td
+                  colspan="3"
+                  class="product-detail-cell">
+
+                  <div class="retailer-products">
+
+
+                    <div class="retailer-products-header">
+
+                      <span>
+                        Product
+                      </span>
+
+                      <span>
+                        Sales Count
+                      </span>
+
+                    </div>
+
+
+                    <div
+                      class="retailer-product-row"
+                      *ngFor="let product of item.products">
+
+                      <span>
+                        {{ product.productName }}
+                      </span>
+
+
+                      <span class="sales-count">
+                        {{ product.salesCount }}
+                      </span>
+
+                    </div>
+
+
+                    <div
+                      class="no-retailer-products"
+                      *ngIf="
+                        !item.products ||
+                        item.products.length === 0
+                      ">
+
+                      No product details available.
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            </ng-container>
+
+
+            <!-- ==================================
+                 NO RESULTS
+            =================================== -->
+
+            <tr
+              *ngIf="
+                sortedRetailers().length === 0
+              ">
+
+              <td
+                colspan="3"
+                class="no-results">
+
+                No sales records found for the selected criteria.
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- ======================================
+           RETAILER SALES BAR CHART
+      ======================================= -->
+
+      <section class="sales-distribution">
+
+        <div class="distribution-header">
+
+          <h2>
+            Sales Distribution
+          </h2>
+
+          <p>
+            Sales count by retailer for the selected period
+          </p>
+
+        </div>
+
+
+        <div
+          class="bar-chart"
+          *ngIf="sortedRetailers().length > 0">
+
+          <div
+            class="bar-item"
+            *ngFor="
+              let item of sortedRetailers();
+              let i = index
+            ">
+
+
+            <div class="bar-value">
+              {{ item.salesCount }}
+            </div>
+
+
+            <div class="bar-track">
+
+              <div
+                class="bar-fill"
+                [style.height.%]="
+                  getSalesPercentage(
+                    item.salesCount,
+                    sortedRetailers()
+                  )
+                "
+                [style.--bar-index]="i">
+              </div>
+
+            </div>
+
+
+            <div class="bar-label">
+              {{ item.retailerName }}
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="no-chart-data"
+          *ngIf="sortedRetailers().length === 0">
+
+          No sales data available to display.
+
+        </div>
+
+      </section>
+
+
+      <!-- ======================================
+           PRODUCT-WISE SALES
+      ======================================= -->
+
+      <section class="product-sales">
+
+        <div class="distribution-header">
+
+          <h2>
+            Product-wise Sales
+          </h2>
+
+          <p>
+            Sales count by product for the selected period
+          </p>
+
+        </div>
+
+
+        <!-- PRODUCT DATA AVAILABLE -->
+
+        <div
+          class="product-chart"
+          *ngIf="productSales().length > 0">
+
+
+          <!-- ==================================
+               DONUT
+          =================================== -->
+
+          <div class="donut-container">
+
+            <div
+              class="donut-chart"
+              [style.background]="buildProductDonut()">
+
+              <svg
+                class="donut-hover-overlay"
+                viewBox="0 0 100 100">
+
+                <ng-container
+                  *ngFor="let product of productSales(); let i = index">
+
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    fill="none"
+                    stroke="transparent"
+                    stroke-width="20"
+                    pathLength="100"
+                    [attr.stroke-dasharray]="
+                      getDonutSegmentPercentage(i) +
+                      ' ' +
+                      (100 - getDonutSegmentPercentage(i))
+                    "
+                    [attr.stroke-dashoffset]="getDonutSegmentOffset(i)"
+                    transform="rotate(-90 50 50)">
+
+                    <title>
+                      {{ product.productName }} - {{ product.salesCount }} sales
+                    </title>
+
+                  </circle>
+
+                </ng-container>
+
+              </svg>
+
+              <div class="donut-hole">
+                <span class="donut-total">
+                  {{ getTotalProductSales() }}
+                </span>
+
+                <span class="donut-total-label">
+                  Total Sales
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ==================================
+               PRODUCT LEGEND
+          =================================== -->
+
+          <div class="product-legend">
+
+            <div
+              class="product-legend-item"
+              *ngFor="
+                let product of productSales();
+                let i = index
+              ">
+
+
+              <span
+                class="product-color"
+                [style.background]="
+                  getProductColor(i)
+                ">
+              </span>
+
+
+              <div class="product-details">
+
+                <span class="product-name">
+                  {{ product.productName }}
+                </span>
+
+
+                <span class="product-sales-value">
+
+                  {{ product.salesCount }}
+
+
+                  <span class="product-percentage">
+
+                    {{
+                      getProductPercentage(
+                        product.salesCount
+                      ) | number:'1.0-1'
+                    }}%
+
+                  </span>
+
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- NO PRODUCT DATA -->
+
+        <div
+          class="no-chart-data"
+          *ngIf="productSales().length === 0">
+
+          No product sales data available to display.
+
+        </div>
+
+      </section>
+
+    </section>
+
+
+    <!-- ==========================================
+         FOOTER / STATUS
+    ========================================== -->
+
+    <div
+      class="footer-status"
+      *ngIf="response()">
+
+      <span>
+        {{ sortedRetailers().length }} rows
+      </span>
+
+
+      <span class="footer-separator">
+        •
+      </span>
+
+
+      <span>
+        Last refreshed: {{ currentTime }}
+      </span>
+
+    </div>
+
+  </main>
+
+</div>

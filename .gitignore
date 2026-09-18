@@ -2,34 +2,41 @@
 .vs/
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
 
-# .NET build files
-**/bin/
-**/obj/
+# Build output
+bin/
+obj/
 
-# Angular
-**/node_modules/
-**/.angular/cache/
+# .NET / NuGet
+project.lock.json
+project.fragment.lock.json
+artifacts/
 
-# SQLite databases
+# ASP.NET Core local configuration
+appsettings.Local.json
+
+# SQLite database files
 *.db
 *.db-shm
 *.db-wal
-
-# Environment / secrets
-.env
-.env.*
-!.env.example
-
-# Local configuration
-appsettings.Local.json
+*.sqlite
+*.sqlite3
 
 # Logs
 *.log
+logs/
 
-# OS files
+# OS generated files
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Git repositories accidentally copied inside the project
-**/.git/
+# IDE / editor files
+.vscode/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
