@@ -1,0 +1,33 @@
+{
+  "settings": {
+    "name": "RetailerSalesSummaryJob",
+    "email_notifications": {
+      "no_alert_for_skipped_runs": false
+    },
+    "timeout_seconds": 0,
+    "max_concurrent_runs": 1,
+    "tasks": [
+      {
+        "task_key": "RetailerSalesSummaryTask",
+        "run_if": "ALL_SUCCESS",
+        "notebook_task": {
+          "notebook_path": "YOUR_NOTEBOOK_PATH",
+          "base_parameters": {
+            "Geography": "YOUR_GEOGRAPHY",
+            "DateFrom": "YYYY-MM-DD",
+            "DateTo": "YYYY-MM-DD",
+            "requestId": "YOUR_REQUEST_ID"
+          },
+          "source": "WORKSPACE"
+        },
+        "timeout_seconds": 0,
+        "disabled": false
+      }
+    ],
+    "format": "MULTI_TASK",
+    "queue": {
+      "enabled": true
+    },
+    "performance_target": "PERFORMANCE_OPTIMIZED"
+  }
+}
